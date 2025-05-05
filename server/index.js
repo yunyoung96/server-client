@@ -9,7 +9,11 @@ app.use("/", async (req, res) => {
     try 
     {
         console.log("Launching browser...");
-        browser = await puppeteer.launch();
+        browser = await puppeteer.launch({
+            ignoreHTTPSErrors: true,
+            executablePath: '/opt/bin/chromium' || process.env.CHROME_PATH,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
     }
     catch(error)
     {
