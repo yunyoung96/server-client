@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
+const puppeteer = require('puppeteer');
 const cors = require('cors');
+const cheerio = require('cheerio');
 
 app.use("/", async (req, res) => {
     try 
