@@ -1,22 +1,22 @@
 const express = require('express');
 const app = express();
-const puppeteer = require('puppeteer');
 const cors = require('cors');
 const cheerio = require('cheerio');
+const chromium = require('chrome-aws-lambda');
 
 app.use("/", async (req, res) => {
     try 
     {
-        const browser = await puppeteer.launch({
-            headless: true,
-            args: [
-              '--no-sandbox',
-              '--disable-setuid-sandbox',
-              '--disable-gpu',
-              '--disable-dev-shm-usage'
-            ]
-          });
+        console.log("Launching browser...");
+        const browser = await chromium.puppeteer.launch({
+            args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath,
+            headless: chromium.headless,
+        });
+        console.log("Opening new page...");
         const page = await browser.newPage();
+        console.log("Navigating to webtoon site...");
         await page.goto('https://comic.naver.com/webtoon?tab=mon', { waitUntil: 'networkidle0' });
     
         const content = await page.content();
