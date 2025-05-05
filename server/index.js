@@ -7,7 +7,15 @@ const cheerio = require('cheerio');
 app.use("/", async (req, res) => {
     try 
     {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: [
+              '--no-sandbox',
+              '--disable-setuid-sandbox',
+              '--disable-gpu',
+              '--disable-dev-shm-usage'
+            ]
+          });
         const page = await browser.newPage();
         await page.goto('https://comic.naver.com/webtoon?tab=mon', { waitUntil: 'networkidle0' });
     
