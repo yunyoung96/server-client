@@ -2,10 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-app.use(cors());
-
 app.use("/", async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
     try 
     {
         const browser = await puppeteer.launch();
@@ -25,6 +22,7 @@ app.use("/", async (req, res) => {
         });
     
         await browser.close();
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.json(webtoons);
     }
     catch(error)
