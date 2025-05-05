@@ -3,7 +3,7 @@ const app = express()
 
 app.use("/", (req, res) => {
     res.send("Server is running.");
-
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.status(200).json({ message: 'haha' });
 });
 
