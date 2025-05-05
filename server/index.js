@@ -2,24 +2,19 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cheerio = require('cheerio');
-const chromium = require('chrome-aws-lambda');
+const puppeteer = require('puppeteer');
 
 app.use("/", async (req, res) => {
     let browser;
     try 
     {
         console.log("Launching browser...");
-        browser = await chromium.puppeteer.launch({
-            args: chromium.args,
-            defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath,
-            headless: chromium.headless,
-        });
+        browser = await puppeteer.launch();
     }
     catch(error)
     {
         console.error('서버를 받던 중:', error.message);
-        res.status(500).send('서버를 받던 중');
+        res.status(500).send(`서버를 받던 중: ${error.message}`);
     }
     try
     {
@@ -47,7 +42,7 @@ app.use("/", async (req, res) => {
     catch(error)
     {
         console.error('데이터 받던 중:', error.message);
-        res.status(500).send('데이터 받던 중');
+        res.status(500).send(`데이터를 받던 중: ${error.message}`);
     }
 });
 
