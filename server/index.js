@@ -5,15 +5,24 @@ const cheerio = require('cheerio');
 const chromium = require('chrome-aws-lambda');
 
 app.use("/", async (req, res) => {
+    let browser;
     try 
     {
         console.log("Launching browser...");
-        const browser = await chromium.puppeteer.launch({
+        browser = await chromium.puppeteer.launch({
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
             executablePath: await chromium.executablePath,
             headless: chromium.headless,
         });
+    }
+    catch(error)
+    {
+        console.error('서버를 받던 중:', error.message);
+        res.status(500).send('서버를 받던 중');
+    }
+    try
+    {
         console.log("Opening new page...");
         const page = await browser.newPage();
         console.log("Navigating to webtoon site...");
@@ -37,8 +46,8 @@ app.use("/", async (req, res) => {
     }
     catch(error)
     {
-        console.error('스크래핑 중 오류 발생:', error.message);
-        res.status(500).send('웹툰 데이터를 가져오는 중 오류 발생');
+        console.error('데이터 받던 중:', error.message);
+        res.status(500).send('데이터 받던 중');
     }
 });
 
