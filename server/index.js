@@ -26,7 +26,6 @@ app.use("/", async (req, res) => {
         console.log("Launching browser...");
         browser = await puppeteer.launch({
             args: puppeteer.defaultArgs({ args: chromium.args, headless: "shell" }),
-            defaultViewport: viewport,
             executablePath: await chromium.executablePath(),
             headless: "shell",
           });
