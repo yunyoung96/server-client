@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
+const chromium = require('chrome-aws-lambda');
 
 app.use("/", async (req, res) => {
     let browser;
@@ -11,7 +12,7 @@ app.use("/", async (req, res) => {
         console.log("Launching browser...");
         browser = await puppeteer.launch({
             ignoreHTTPSErrors: true,
-            executablePath: '/opt/bin/chromium' || process.env.CHROME_PATH,
+            executablePath: process.env.CHROME_PATH,
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
     }
