@@ -20,5 +20,8 @@
     "nodemon": "^3.1.10",
     "puppeteer": "^24.8.0",
     "puppeteer-core": "^10.4.0"
+  },
+  "devDependencies": {
+    "@sparticuz/chromium": "^133.0.0"
   }
 }

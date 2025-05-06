@@ -1,9 +1,23 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const cheerio = require('cheerio');
-const chromium = require("@sparticuz/chromium");
-const puppeteer = require("puppeteer-core");
+let express;
+let app;
+let cros;
+let cheerio;
+let chromium;
+let puppeteer;
+
+try
+{
+    express = require('express');
+    app = express();
+    cors = require('cors');
+    cheerio = require('cheerio');
+    chromium = require("@sparticuz/chromium");
+    puppeteer = require("puppeteer-core");
+}
+catch(error)
+{
+    console.error('라이브러리르 받던 중:', error.message);
+}
 
 app.use("/", async (req, res) => {
     let browser;
@@ -11,12 +25,11 @@ app.use("/", async (req, res) => {
     {
         console.log("Launching browser...");
         browser = await puppeteer.launch({
-            args: chromium.args,
-            defaultViewport: chromium.defaultViewport,
+            args: puppeteer.defaultArgs({ args: chromium.args, headless: "shell" }),
+            defaultViewport: viewport,
             executablePath: await chromium.executablePath(),
-            headless: chromium.headless,
-            ignoreHTTPSErrors: true,
-        });
+            headless: "shell",
+          });
     }
     catch(error)
     {
