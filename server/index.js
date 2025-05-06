@@ -19,6 +19,8 @@ catch(error)
     console.error('라이브러리르 받던 중:', error.message);
 }
 
+
+
 app.use("/", async (req, res) => {
     let browser;
     try 
@@ -39,6 +41,7 @@ app.use("/", async (req, res) => {
     {
         console.log("Opening new page...");
         const page = await browser.newPage();
+        page.setDefaultNavigationTimeout(0);
         console.log("Navigating to webtoon site...");
         await page.goto('https://comic.naver.com/webtoon?tab=mon', { waitUntil: 'networkidle0' });
     
